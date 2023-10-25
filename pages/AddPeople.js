@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import { setLocalStoreData } from '../helper/localStorage';
 function AddPeople({ navigation }) {
   const [name, setName] = useState('');
   const [birthday, setBirthday] = useState(new Date());
@@ -22,7 +22,6 @@ function AddPeople({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Add New Person</Text>
       <TextInput
         style={styles.input}
         placeholder="Name"
