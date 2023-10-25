@@ -9,7 +9,7 @@ function PeopleList({ navigation }) {
         data={[]}
         renderItem={({ item }) => null}
         keyExtractor={item => item.login.uuid}
-    />:<TouchableOpacity onPress={()=> navigation.navigate("AddPeople")} >
+    />:<TouchableOpacity onPress={()=> navigation.navigate("AddFromContact")} >
         <Ionicons name="person-add-sharp" size={50} color="black" />
         <Text>Add People</Text>
     </TouchableOpacity>}</View>)

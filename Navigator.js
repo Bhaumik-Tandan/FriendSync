@@ -1,7 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PeopleList from './pages/PeopleList';
-import AddPeople from './pages/AddPeople';
+// import AddPeople from './pages/AddPeople';
+import AddFromContact from './pages/AddFromContact';
 const Stack = createNativeStackNavigator();
 
 function Navigator() {
@@ -14,10 +15,14 @@ function Navigator() {
             name={"PeopleList"}
             component={PeopleList}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
             name={"AddPeople"}
             component={AddPeople}
-        />
+        /> */}
+        <Stack.Screen
+            name={"AddFromContact"}
+            component={AddFromContact}
+        /> 
     </Stack.Group>
             </Stack.Navigator>
         </NavigationContainer>
