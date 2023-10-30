@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "friendSync",
-    "slug": "friendSync",
+    "name": "FriendSync",
+    "slug": "friendsync",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSContactsUsageDescription": "Allow $(PRODUCT_NAME) to access your contacts to add users from contacts."
+        "NSContactsUsageDescription": "Allow $(PRODUCT_NAME) to access your contacts."
       },
       "bundleIdentifier": "com.friendSync.friendSync"
     },
@@ -37,7 +37,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ad94b17a-4d07-413f-ae49-51c7b4b84100"
+        "projectId": "091b722f-f546-4cb2-8280-d5af562d9561"
       }
     },
     "plugins": [
@@ -48,6 +48,6 @@
         }
       ]
     ],
-    "owner": "friendSync"
+    "owner": "friendsync"
   }
 }
