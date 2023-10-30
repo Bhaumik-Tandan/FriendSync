@@ -31,6 +31,17 @@ export const PeopleProvider = ({ children }) => {
         await setLocalStoreData('people',updatedPeople);
     };
 
+    const handleEditPerson = async (person) => {
+        const updatedPeople = people.map((p) => {
+            if (p.id === person.id) {
+                return person;
+            }
+            return p;
+        });
+        setPeople(updatedPeople);
+        await setLocalStoreData('people',updatedPeople);
+    };
+
     return (
         <PeopleContext.Provider
             value={{
@@ -38,6 +49,7 @@ export const PeopleProvider = ({ children }) => {
                 setPeople,
                 handleAddPeople,
                 deletePerson,
+                handleEditPerson
             }}
         >
             {children}

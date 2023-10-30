@@ -4,26 +4,21 @@ import { calcHeight,calcWidth } from '../helper/res';
 import { Ionicons } from '@expo/vector-icons';
 import CardMenu from './CardMenu';
 import { usePeople } from '../context/PeopleContext';
-import ViewShot from 'react-native-view-shot';
-import shareContent from '../helper/shareContent';
+import { useNavigation } from '@react-navigation/native';
 
 function Person({ name, description, birthday,id }) {
   birthday = birthday!=="" ?new Date(birthday):"";
   const { deletePerson } = usePeople();
   const [showMenu, setShowMenu] = React.useState(false);
-  const viewShotRef = useRef();
+  const navigation = useNavigation();
 
-  const sharePerson = async () => {
-    if(!viewShotRef.current) return;
-    const fileUri= await viewShotRef.current.capture();
-    await shareContent({imageUri:fileUri,message:`Hey meet ${name}!`,title:`${name}`});
-  };
+  const handleEditPerson = () => {
+    navigation.navigate('AddPeople',{name,description,birthday,id});
+    setShowMenu(false);
+  }
+
 
   return (
-    <ViewShot
-    options={{ format: 'jpg', quality: 0.9 }}
-    ref={viewShotRef}
-    >
     <View style={styles.cardContainer}>
       <View style={styles.textContainer}>
         <View style={{flexDirection:"row",justifyContent:"space-between"}}>
@@ -45,12 +40,10 @@ function Person({ name, description, birthday,id }) {
       visible={showMenu}
       hideMenu={() => setShowMenu(false)}
       onDelete={() => deletePerson({id})}
-      handleShare={() => sharePerson()}
-      setShowEditCard={() => setShowMenu(false)}
+      editCard={handleEditPerson}
   />
 
     </View>
-    </ViewShot>
   );
 }
 

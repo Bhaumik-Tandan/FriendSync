@@ -7,21 +7,46 @@ import { usePeople } from '../context/PeopleContext';
 import { calcHeight, calcWidth } from '../helper/res';
 import { AntDesign } from '@expo/vector-icons'; 
 
-function AddPeople({ navigation }) {
+function AddPeople({ navigation, route }) {
+  const { name: routeName, description: routeDescription, birthday: routeBirthday,id } = route.params || {};
   const [name, setName] = useState('');
   const [birthday, setBirthday] = useState(new Date());
   const [description, setDescription] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const {handleAddPeople} = usePeople();
+  const {handleAddPeople,handleEditPerson} = usePeople();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: id?"Edit Person":"Add Person",
+    });
+  }, [navigation]);
+  
   const handleAddPerson = async () => {
     const newPerson = {
       name,
       birthday,
       description,
     };
+    if(id)
+    await handleEditPerson({id,...newPerson});
+    else
     await handleAddPeople([newPerson]);
     navigation.navigate('PeopleList');
   };
+
+  React.useEffect(() => {
+    if (routeName) {
+      setName(routeName);
+    }
+    if (routeDescription) {
+      setDescription(routeDescription);
+    }
+    if (routeBirthday) {
+      setBirthday(routeBirthday);
+    }
+  }
+  , [routeName, routeDescription, routeBirthday]);
+
 
   const onDateChange = (event, selectedDate) => {
     if (selectedDate) {
@@ -81,7 +106,7 @@ function AddPeople({ navigation }) {
         />
       )}
       <Button
-        title="Add Person"
+        title={id?"Edit Person":"Add Person"}
         onPress={handleAddPerson}
         color="#007AFF"
         style={styles.button}

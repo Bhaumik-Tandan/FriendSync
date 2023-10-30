@@ -6,11 +6,10 @@ import Modal from 'react-native-modal';
 import {AntDesign} from '@expo/vector-icons';
 
 const CardMenu = ({
-    setShowEditCard,
+    editCard,
     visible,
     hideMenu,
     onDelete,
-    handleShare,
 }) => {
     const deleteAlert = () => {
         hideMenu();
@@ -49,7 +48,7 @@ const CardMenu = ({
             <View style={styles.modalContent}>
                 <TouchableOpacity
                     style={styles.menuItem}
-                    onPress={setShowEditCard}
+                    onPress={editCard}
                 >
                     <Ionicons
                         name="create-outline"
@@ -66,10 +65,6 @@ const CardMenu = ({
                     />
                     <Text style={styles.menuText}>Delete Person</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem} onPress={handleShare}>
-                <AntDesign name="sharealt" size={calcHeight(5)} color="blue" />
-                <Text style={styles.menuText}>Share Person</Text>
-            </TouchableOpacity>
             </View>
         </Modal>
     );
