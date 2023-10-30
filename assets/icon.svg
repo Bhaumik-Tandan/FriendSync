@@ -10,6 +10,6 @@
     <circle cx="100" cy="100" r="16" fill="#333" />
   
     <!-- App Name -->
-    <text x="100" y="170" fill="#333" font-size="14" text-anchor="middle">Connexions</text>
+    <text x="100" y="170" fill="#333" font-size="14" text-anchor="middle">FriendSync</text>
   </svg>
   

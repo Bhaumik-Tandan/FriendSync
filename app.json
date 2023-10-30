@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "connexions",
-    "slug": "connexions",
+    "name": "friendSync",
+    "slug": "friendSync",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,7 +19,7 @@
       "infoPlist": {
         "NSContactsUsageDescription": "Allow $(PRODUCT_NAME) to access your contacts to add users from contacts."
       },
-      "bundleIdentifier": "com.connexions.connexions"
+      "bundleIdentifier": "com.friendSync.friendSync"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +30,7 @@
         "android.permission.READ_CONTACTS",
         "android.permission.WRITE_CONTACTS"
       ],
-      "package": "com.connexions.connexions"
+      "package": "com.friendSync.friendSync"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -48,6 +48,6 @@
         }
       ]
     ],
-    "owner": "connexions"
+    "owner": "friendSync"
   }
 }
