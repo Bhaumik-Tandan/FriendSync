@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Feather'; // Import icons from 'react-native-vector-icons'
-import {setLocalStoreData,getLocalStoreData} from '../helper/localStorage';
+import { FAB } from 'react-native-paper';
 import { usePeople } from '../context/PeopleContext';
+import { calcHeight, calcWidth } from '../helper/res';
+import { AntDesign } from '@expo/vector-icons'; 
 
 function AddPeople({ navigation }) {
   const [name, setName] = useState('');
@@ -84,7 +86,10 @@ function AddPeople({ navigation }) {
         color="#007AFF"
         style={styles.button}
       />
-    </View>
+      <View style={styles.fabContainer}>
+      <FAB   icon={() => <AntDesign name="adduser" size={24} color="black" />}
+       onPress={()=> navigation.navigate("AddFromContact")} />
+      </View></View>
   );
 }
 
@@ -127,6 +132,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 10,
   },
+  fabContainer: {
+    position: 'absolute',
+    bottom: calcHeight(5), // 5% of the device height
+    right: calcWidth(5), // 5% of the device width
+}
 });
 
 export default AddPeople;

@@ -22,8 +22,7 @@ function PeopleList({ navigation }) {
         <Text>Add People</Text>
     </TouchableOpacity>}
     <View style={styles.fabContainer}>
-                <FAB style={styles.fab} icon="plus" onPress={()=> navigation.navigate("AddPeople")} />
-                <FAB style={styles.fab} icon="plus" onPress={()=> navigation.navigate("AddFromContact")} />
+                <FAB  icon="plus" onPress={()=> navigation.navigate("AddPeople")} />
             </View>
     </View>)
   ;
