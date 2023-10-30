@@ -18,7 +18,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSContactsUsageDescription": "Allow $(PRODUCT_NAME) to access your contacts to add users from contacts."
-      }
+      },
+      "bundleIdentifier": "com.connexions.connexions"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,7 +29,8 @@
       "permissions": [
         "android.permission.READ_CONTACTS",
         "android.permission.WRITE_CONTACTS"
-      ]
+      ],
+      "package": "com.connexions.connexions"
     },
     "web": {
       "favicon": "./assets/favicon.png"
