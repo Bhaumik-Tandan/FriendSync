@@ -22,6 +22,7 @@ export default function AddFromContact({navigation}) {
     })();
   }, []);
 
+
   const toggleContactSelection = (contact) => {
     if (selectedContacts.includes(contact)) {
       setSelectedContacts(selectedContacts.filter((c) => c !== contact));
@@ -81,7 +82,7 @@ export default function AddFromContact({navigation}) {
       </ScrollView>
       <TouchableOpacity
         style={styles.addButton}
-        onPress={handleAddPeople}
+        onPress={()=>handleAddPeople()}
       >
         <Text style={styles.buttonText}>Add Person</Text>
       </TouchableOpacity>
