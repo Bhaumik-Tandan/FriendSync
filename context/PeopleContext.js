@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getLocalStoreData,setLocalStoreData } from '../helper/localStorage';
+import getUUID from '../helper/getUUID';
 
 const PeopleContext = createContext();
 
@@ -16,10 +17,19 @@ export const PeopleProvider = ({ children }) => {
     }, []);
 
     const handleAddPeople = async (newPeople) => {
+        newPeople.map((person)=>{
+            person.id = getUUID();
+        });
         const updatedPeople = people? [...people,...newPeople]:newPeople;
         setPeople(updatedPeople);
         await setLocalStoreData('people',updatedPeople);
       };
+
+    const deletePerson = async (person) => {
+        const updatedPeople = people.filter((p) => p.id !== person.id);
+        setPeople(updatedPeople);
+        await setLocalStoreData('people',updatedPeople);
+    };
 
     return (
         <PeopleContext.Provider
@@ -27,6 +37,7 @@ export const PeopleProvider = ({ children }) => {
                 people,
                 setPeople,
                 handleAddPeople,
+                deletePerson,
             }}
         >
             {children}
