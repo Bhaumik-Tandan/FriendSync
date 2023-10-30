@@ -32,5 +32,5 @@ export const getLocalStoreData = async (key) => {
     }
 };
 
-removeLocalStoreData('people');
+// removeLocalStoreData('people');
 export default { setLocalStoreData, getLocalStoreData, removeLocalStoreData };

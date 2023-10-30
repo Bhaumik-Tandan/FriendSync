@@ -1,14 +1,17 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { calcHeight,calcWidth } from '../helper/res';
 
-function Person({ name, description, birthday, image }) {
+function Person({ name, description, birthday }) {
+  birthday = birthday!=="" ?new Date(birthday):"";
   return (
     <View style={styles.card}>
-      <Image source={image} style={styles.image} />
       <View style={styles.textContainer}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.description}>{description}</Text>
-        <Text style={styles.birthday}>Birthday: {birthday}</Text>
+        <Text style={styles.birthday}>{birthday!=='' &&
+        birthday.getDate() + ' ' + birthday.toLocaleString('default', { month: 'short' }) + ' ' + birthday.getFullYear()
+        }</Text>
       </View>
     </View>
   );
@@ -23,13 +26,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    margin: 10,
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    margin: 40,
+    width: calcWidth(30),
   },
   textContainer: {
     padding: 10,

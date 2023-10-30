@@ -3,25 +3,21 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Platform }
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Feather'; // Import icons from 'react-native-vector-icons'
 import {setLocalStoreData,getLocalStoreData} from '../helper/localStorage';
+import { usePeople } from '../context/PeopleContext';
 
 function AddPeople({ navigation }) {
   const [name, setName] = useState('');
   const [birthday, setBirthday] = useState(new Date());
   const [description, setDescription] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
-
+  const {handleAddPeople} = usePeople();
   const handleAddPerson = async () => {
-    console.log('Name:', name);
-    console.log('Birthday:', birthday);
-    console.log('Description:', description);
-    const people = await getLocalStoreData('people');
     const newPerson = {
       name,
       birthday,
       description,
     };
-    const updatedPeople = people? [...people, newPerson]:[newPerson];
-    await setLocalStoreData('people',updatedPeople);
+    await handleAddPeople([newPerson]);
     navigation.navigate('PeopleList');
   };
 
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'white', // Set a background color
+    backgroundColor: 'white', // Set a background color,
   },
   input: {
     height: 40,

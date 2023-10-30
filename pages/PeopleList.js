@@ -3,17 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Ionicons } from '@expo/vector-icons'; 
 import {getLocalStoreData} from '../helper/localStorage';
 import Person from "../components/Person";
+import {calcHeight,calcWidth} from '../helper/res';
+import { FAB } from 'react-native-paper';
+import { usePeople } from "../context/PeopleContext";
 
 function PeopleList({ navigation }) {
-    const [people, setPeople] = useState([]); 
-    useEffect(() => {
-        const getPeople = async () => {
-            const people = await getLocalStoreData('people');
-            setPeople(people);
-        };
-        getPeople();
-    }, []);
-    
+    const {people} = usePeople();
+
 
   return (<View style={styles.container}>{people && people.length > 0 ?
     <FlatList
@@ -24,7 +20,12 @@ function PeopleList({ navigation }) {
     />:<TouchableOpacity onPress={()=> navigation.navigate("AddPeople")} >
         <Ionicons name="person-add-sharp" size={50} color="black" />
         <Text>Add People</Text>
-    </TouchableOpacity>}</View>)
+    </TouchableOpacity>}
+    <View style={styles.fabContainer}>
+                <FAB style={styles.fab} icon="plus" onPress={()=> navigation.navigate("AddPeople")} />
+                <FAB style={styles.fab} icon="plus" onPress={()=> navigation.navigate("AddFromContact")} />
+            </View>
+    </View>)
   ;
 }
 
@@ -36,5 +37,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         justifyContent:"center"
+    },
+    fabContainer: {
+        position: 'absolute',
+        bottom: calcHeight(5), // 5% of the device height
+        right: calcWidth(5), // 5% of the device width
     }
 });
