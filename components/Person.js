@@ -19,17 +19,10 @@ function Person({ name, description, birthday,id }) {
 
 
   return (
-    <View style={styles.cardContainer}>
+    <TouchableOpacity style={styles.cardContainer} onPress={()=>setShowMenu(true)}>
       <View style={styles.textContainer}>
         <View style={{flexDirection:"row",justifyContent:"space-between"}}>
         <Text style={styles.name}>{name}</Text>
-        <TouchableOpacity onPress={() => setShowMenu(true)}>
-                        <Ionicons
-                            name="ellipsis-vertical-outline"
-                            size={calcHeight(3)}
-                            color="black"
-                        />
-                    </TouchableOpacity>
                     </View>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.birthday}>{birthday!=='' &&
@@ -43,7 +36,7 @@ function Person({ name, description, birthday,id }) {
       editCard={handleEditPerson}
   />
 
-    </View>
+    </TouchableOpacity>
   );
 }
 
