@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity,FlatList } from 'react-native';
 import * as Contacts from 'expo-contacts';
 import { MaterialIcons } from '@expo/vector-icons';
 import { usePeople } from '../context/PeopleContext';
@@ -57,29 +57,30 @@ export default function AddFromContact({navigation}) {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {contacts.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            style={[
-              styles.cardItem,
-              {
-                backgroundColor: selectedContacts.includes(item) ? 'lightgreen' : 'white',
-              },
-            ]}
-            onPress={() => toggleContactSelection(item)}
-          >
-            <MaterialIcons
-              name={
-                selectedContacts.includes(item) ? 'check-box' : 'check-box-outline-blank'
-              }
-              size={30}
-              color={selectedContacts.includes(item) ? 'green' : 'lightgray'}
-            />
-            <Text style={styles.cardItemText}>{`${item.firstName} ${item.lastName}`}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      <FlatList
+      data={contacts}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={[
+            styles.cardItem,
+            {
+              backgroundColor: selectedContacts.includes(item) ? 'lightgreen' : 'white',
+            },
+          ]}
+          onPress={() => toggleContactSelection(item)}
+        >
+          <MaterialIcons
+            name={
+              selectedContacts.includes(item) ? 'check-box' : 'check-box-outline-blank'
+            }
+            size={30}
+            color={selectedContacts.includes(item) ? 'green' : 'lightgray'}
+          />
+          <Text style={styles.cardItemText}>{`${item.firstName} ${item.lastName}`}</Text>
+        </TouchableOpacity>
+      )}
+    />
       <TouchableOpacity
         style={styles.addButton}
         onPress={()=>handleAddPeople()}
