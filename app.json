@@ -2,7 +2,7 @@
   "expo": {
     "name": "FriendSync",
     "slug": "friendsync",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,8 @@
       "infoPlist": {
         "NSContactsUsageDescription": "Allow $(PRODUCT_NAME) to access your contacts."
       },
-      "bundleIdentifier": "com.friendSync.friendSync"
+      "bundleIdentifier": "com.friendSync.friendSync",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +31,8 @@
         "android.permission.READ_CONTACTS",
         "android.permission.WRITE_CONTACTS"
       ],
-      "package": "com.friendSync.friendSync"
+      "package": "com.friendSync.friendSync",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
