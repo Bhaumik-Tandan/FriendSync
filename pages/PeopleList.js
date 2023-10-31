@@ -17,7 +17,7 @@ function PeopleList({ navigation }) {
         renderItem={({ item }) => <Person {...item} />}
         keyExtractor={item => item.name}
         numColumns={2}
-    />:<TouchableOpacity onPress={()=> navigation.navigate("AddPeople")} >
+    />:<TouchableOpacity style={styles.addPeopleButton} onPress={()=> navigation.navigate("AddPeople")} >
         <Ionicons name="person-add-sharp" size={50} color="black" />
         <Text>Add People</Text>
     </TouchableOpacity>}
@@ -41,5 +41,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: calcHeight(5), // 5% of the device height
         right: calcWidth(5), // 5% of the device width
-    }
+    },
+    addPeopleButton: {
+        padding: 16,
+        borderRadius: 8,
+        elevation: 2,
+        marginBottom: 8,
+        alignItems: "center",
+        justifyContent:"center",
+    },
 });
