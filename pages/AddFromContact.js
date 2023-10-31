@@ -3,22 +3,25 @@ import { StyleSheet, View, Text, TouchableOpacity,FlatList } from 'react-native'
 import * as Contacts from 'expo-contacts';
 import { MaterialIcons } from '@expo/vector-icons';
 import { usePeople } from '../context/PeopleContext';
+import Loader from '../components/Loader';
 
 export default function AddFromContact({navigation}) {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [contacts, setContacts] = useState([]);
-  const {handleAddPeople:addPeople} = usePeople();
+  const {handleAddPeople:addPeople,loading, setLoading} = usePeople();
 
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
       if (status === 'granted') {
+        setLoading(true);
         const { data } = await Contacts.getContactsAsync();
 
         if (data.length > 0) {
           setContacts(data);
         }
       }
+      setLoading(false);
     })();
   }, []);
 
@@ -55,7 +58,7 @@ export default function AddFromContact({navigation}) {
     navigation.navigate("PeopleList");
   };
 
-  return (
+  return loading?<Loader/>:(
     <View style={styles.container}>
       <FlatList
       data={contacts}

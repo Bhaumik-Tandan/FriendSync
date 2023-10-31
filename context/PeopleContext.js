@@ -7,6 +7,7 @@ const PeopleContext = createContext();
 export const PeopleProvider = ({ children }) => {
 
     const [people, setPeople] = useState([]); 
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const getPeople = async () => {
@@ -49,7 +50,9 @@ export const PeopleProvider = ({ children }) => {
                 setPeople,
                 handleAddPeople,
                 deletePerson,
-                handleEditPerson
+                handleEditPerson,
+                loading,
+                setLoading,
             }}
         >
             {children}
