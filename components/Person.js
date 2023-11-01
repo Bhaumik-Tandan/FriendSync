@@ -61,12 +61,16 @@ function Person({ name, description, birthday, id }) {
 
 const styles = StyleSheet.create({
   cardContainer: {
+    backgroundColor: 'white',
     borderRadius: calcWidth(2),
+    elevation: 4, // for Android shadow
+    shadowColor: 'black', // for iOS shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
     width: calcWidth(41.5),
-    marginVertical: calcHeight(2),
-    borderColor: "gray",
-    borderWidth: calcWidth(0.2),
     marginHorizontal: calcWidth(3),
+    marginVertical: calcHeight(2)
   },
   imageContainer: {
     alignItems: "center",
