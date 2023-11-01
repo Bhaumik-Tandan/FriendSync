@@ -1,8 +1,8 @@
-const PAGES={
-    PEOPLE_LIST:"People",
-    ADD_PEOPLE:"Add People",
-    ADD_FROM_CONTACT:"Add From Contacts",
-    PEOPLE_NAVIGATOR:"PeopleNavigator",
+const PAGES = {
+  PEOPLE_LIST: "People",
+  ADD_PEOPLE: "Add People",
+  ADD_FROM_CONTACT: "Add From Contacts",
+  PEOPLE_NAVIGATOR: "PeopleNavigator",
 };
 
 export default PAGES;
