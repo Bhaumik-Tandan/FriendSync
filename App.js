@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Navigator from './Navigator';
+import RootNavigator from './navigator/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
 import { PeopleProvider } from './context/PeopleContext';
@@ -14,7 +14,7 @@ export default function App() {
         >
           <StatusBar style="auto" />
           <PeopleProvider>
-      <Navigator />
+      <RootNavigator />
       </PeopleProvider>
     </SafeAreaProvider>
   );
