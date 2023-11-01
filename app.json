@@ -16,9 +16,6 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "infoPlist": {
-        "NSContactsUsageDescription": "Allow $(PRODUCT_NAME) to access your contacts."
-      },
       "bundleIdentifier": "com.friendSync.friendSync",
       "buildNumber": "2"
     },
@@ -46,7 +43,7 @@
       [
         "expo-contacts",
         {
-          "contactsPermission": "Allow $(PRODUCT_NAME) to access your contacts."
+          "contactsPermission": "We need access to your contacts to make it easier for you to invite friends to events and share contact information with others. Your contacts will not be shared with any third parties and will only be used for in-app function of  looking up friends' information."
         }
       ]
     ],
