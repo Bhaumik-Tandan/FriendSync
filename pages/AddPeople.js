@@ -94,11 +94,10 @@ function AddPeople({ navigation, route }) {
             <View style={styles.calendarIcon}>
               <Icon name="calendar" size={20} color="#007AFF" />
             </View>
+            <Text style={styles.dateText}>{formatDate(birthday)}</Text>
           </TouchableOpacity>
         )}
-        {Platform.OS == "android" ? (
-          <Text style={styles.dateText}>{formatDate(birthday)}</Text>
-        ) : (
+        {Platform.OS == "ios" && (
           <DateTimePicker
             testID="dateTimePicker"
             value={birthday}
