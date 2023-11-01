@@ -19,7 +19,7 @@ function Settings({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.option}
-                onPress={() => navigation.navigate(PAGES.ADD_PEOPLE)}
+                onPress={() => navigation.navigate(PAGES.ADD_FROM_CONTACT)}
             >
                 <Text style={styles.optionText}>Add Person From Contacts</Text>
                 <AntDesign name="adduser" size={calcHeight(3)} color="black" />
