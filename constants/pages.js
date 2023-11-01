@@ -3,6 +3,8 @@ const PAGES = {
   ADD_PEOPLE: "Add People",
   ADD_FROM_CONTACT: "Add From Contacts",
   PEOPLE_NAVIGATOR: "PeopleNavigator",
+  SETTINGS: "Settings",
+  SETTINGS_NAVIGATOR: "SettingsNavigator"
 };
 
 export default PAGES;
