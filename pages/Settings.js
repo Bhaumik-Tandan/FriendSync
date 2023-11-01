@@ -6,29 +6,23 @@ import PAGES from '../constants/pages';
 import { calcHeight } from '../helper/res';
 
 function Settings({ navigation }) {
-
-    const handleExport = () => {
-    };
-
-    const handleImport = () => {
-    };
+ 
 
     return (
         <View>
             <TouchableOpacity
                 style={styles.option}
-                onPress={() => navigation.navigate(PAGES.ADD_CARD)}
+                onPress={() => navigation.navigate(PAGES.ADD_PEOPLE)}
             >
-                <Text style={styles.optionText}>Add Card</Text>
+                <Text style={styles.optionText}>Add Person</Text>
                 <AntDesign name="plus" size={calcHeight(3)} color="black" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={handleExport}>
-                <Text style={styles.optionText}>Export</Text>
-                <AntDesign name="upload" size={calcHeight(3)} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={handleImport}>
-                <Text style={styles.optionText}>Import</Text>
-                <AntDesign name="download" size={calcHeight(3)} color="black" />
+            <TouchableOpacity
+                style={styles.option}
+                onPress={() => navigation.navigate(PAGES.ADD_PEOPLE)}
+            >
+                <Text style={styles.optionText}>Add Person From Contacts</Text>
+                <AntDesign name="adduser" size={calcHeight(3)} color="black" />
             </TouchableOpacity>
         </View>
     );

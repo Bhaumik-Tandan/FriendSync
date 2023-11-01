@@ -28,9 +28,9 @@ function RootNavigator() {
             component={SettingsNavigator}
             options={{
               headerShown: false,
-              tabBarLabel: PAGES.SETTINGS,
+              tabBarLabel: "Menu",
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="settings" size={size} color={color} />
+                <Ionicons name="menu" size={size} color={color} />
               ),
             }}
             />
