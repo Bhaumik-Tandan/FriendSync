@@ -14,6 +14,7 @@ function RootNavigator() {
             <Tab.Screen
                 name={PAGES.PEOPLE_NAVIGATOR}
                 component={PeopleNavigator}
+                options={{ headerShown: false }}
             />
         </Tab.Group>
     </Tab.Navigator>

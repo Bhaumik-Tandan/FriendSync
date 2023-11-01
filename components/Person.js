@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import CardMenu from './CardMenu';
 import { usePeople } from '../context/PeopleContext';
 import { useNavigation } from '@react-navigation/native';
+import PAGES from '../constants/pages';
 
 function Person({ name, description, birthday,id }) {
   birthday = birthday!=="" ?new Date(birthday):"";
@@ -13,7 +14,7 @@ function Person({ name, description, birthday,id }) {
   const navigation = useNavigation();
 
   const handleEditPerson = () => {
-    navigation.navigate('AddPeople',{name,description,birthday,id});
+    navigation.navigate(PAGES.ADD_PEOPLE,{name,description,birthday,id});
     setShowMenu(false);
   }
 

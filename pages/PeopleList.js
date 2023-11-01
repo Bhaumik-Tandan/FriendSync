@@ -6,6 +6,7 @@ import Person from "../components/Person";
 import {calcHeight,calcWidth} from '../helper/res';
 import { FAB } from 'react-native-paper';
 import { usePeople } from "../context/PeopleContext";
+import PAGES from "../constants/pages";
 
 function PeopleList({ navigation }) {
     const {people} = usePeople();
@@ -17,12 +18,12 @@ function PeopleList({ navigation }) {
         renderItem={({ item }) => <Person {...item} />}
         keyExtractor={item => item.name}
         numColumns={2}
-    />:<TouchableOpacity style={styles.addPeopleButton} onPress={()=> navigation.navigate("AddPeople")} >
+    />:<TouchableOpacity style={styles.addPeopleButton} onPress={()=> navigation.navigate(PAGES.ADD_PEOPLE)} >
         <Ionicons name="person-add-sharp" size={50} color="black" />
         <Text>Add People</Text>
     </TouchableOpacity>}
     <View style={styles.fabContainer}>
-                <FAB  icon="plus" onPress={()=> navigation.navigate("AddPeople")} />
+                <FAB  icon="plus" onPress={()=> navigation.navigate(PAGES.ADD_PEOPLE)} />
             </View>
     </View>)
   ;

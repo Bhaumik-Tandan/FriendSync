@@ -6,6 +6,7 @@ import { FAB } from 'react-native-paper';
 import { usePeople } from '../context/PeopleContext';
 import { calcHeight, calcWidth } from '../helper/res';
 import { AntDesign } from '@expo/vector-icons'; 
+import PAGES from '../constants/pages';
 
 function AddPeople({ navigation, route }) {
   const { name: routeName, description: routeDescription, birthday: routeBirthday,id } = route.params || {};
@@ -113,7 +114,7 @@ function AddPeople({ navigation, route }) {
       />
       <View style={styles.fabContainer}>
       <FAB   icon={() => <AntDesign name="adduser" size={24} color="black" />}
-       onPress={()=> navigation.navigate("AddFromContact")} />
+       onPress={()=> navigation.navigate(PAGES.ADD_FROM_CONTACT)} />
       </View></View>
   );
 }
