@@ -79,20 +79,37 @@ export default function AddFromContact({ navigation }) {
   ) : (
     <View style={styles.container}>
        <TouchableOpacity
-            style={[
-              // styles.cardItem,
-              {
-                backgroundColor: isAllSelected 
-                  ? "lightgreen"
-                  : "white",
-              },
-            ]}
-            onPress={selectAllContacts}
-          >
-            <Text
-              style={styles.cardItemText}
-            >{isAllSelected?"Deselect All":"Select All"}</Text>
-          </TouchableOpacity>
+  style={[
+    {
+      backgroundColor: isAllSelected ? "lightgreen" : "white",
+      padding: 10,
+      borderRadius: 5,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 2,
+      elevation: 2,
+      marginBottom:30
+    },
+  ]}
+  activeOpacity={0.7}
+  underlayColor="#DDDDDD"
+  onPress={selectAllContacts}
+  accessibilityLabel={isAllSelected ? "Deselect all contacts" : "Select all contacts"}
+>
+  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+   
+    <Text
+      style={[
+        styles.cardItemText,
+        { fontWeight: 'bold', marginLeft: 10 }
+      ]}
+    >
+      {isAllSelected ? "Deselect All" : "Select All"}
+    </Text>
+  </View>
+</TouchableOpacity>
+
       <FlatList
         data={contacts}
         keyExtractor={(item) => item.id.toString()}
@@ -137,31 +154,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5", // Light gray background
-    padding: calcHeight(2),
+    padding: calcHeight(2), // Padding relative to screen height
   },
   cardItem: {
     flexDirection: "row",
     alignItems: "center",
-    padding: calcHeight(1),
-    marginBottom: 8,
+    padding: calcHeight(1), // Padding relative to screen height
+    marginBottom: calcHeight(0.5), // Margin bottom relative to screen height
     backgroundColor: "white",
-    borderRadius: 8,
+    borderRadius: calcWidth(2), // Border radius relative to screen width
     elevation: 2, // Add a shadow to the cards
   },
   cardItemText: {
-    fontSize: 16,
-    marginLeft: 12,
+    fontSize: getFontSizeByWindowWidth(20), // Font size relative to screen width
+    marginLeft: calcWidth(3), // Margin left relative to screen width
   },
   addButton: {
     backgroundColor: "#007AFF",
     color: "white",
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 16,
+    padding: calcHeight(1), // Padding relative to screen height
+    borderRadius: calcWidth(2), // Border radius relative to screen width
+    marginTop: calcHeight(1), // Margin top relative to screen height
     alignItems: "center",
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: getFontSizeByWindowWidth(20), // Font size relative to screen width
   }
 });
