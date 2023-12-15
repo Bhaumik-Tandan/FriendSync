@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import CardMenu from "./CardMenu";
+import Menu from "./Menu";
 import { usePeople } from "../context/PeopleContext";
 import { useNavigation } from "@react-navigation/native";
 import PAGES from "../constants/pages";
@@ -49,8 +49,9 @@ function Person({ name, description, birthday, id }) {
           )}
         </View>
       </TouchableOpacity>
-      <CardMenu
+      <Menu
         visible={showMenu}
+        name={name}
         hideMenu={() => setShowMenu(false)}
         onDelete={() => deletePerson({ id })}
         editCard={handleEditPerson}
