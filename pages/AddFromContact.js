@@ -12,14 +12,14 @@ import { usePeople } from "../context/PeopleContext";
 import Loader from "../components/Loader";
 import PAGES from "../constants/pages";
 import { calcHeight,calcWidth,getFontSizeByWindowWidth } from "../helper/res";
-
+import { SearchBar } from "react-native-elements"; 
 
 export default function AddFromContact({ navigation }) {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [contacts, setContacts] = useState([]);
   const { handleAddPeople: addPeople, loading, setLoading } = usePeople();
   const [isAllSelected, setIsAllSelected] = useState(false);
-
+  const [search, setSearch] = useState("");
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
@@ -80,11 +80,27 @@ export default function AddFromContact({ navigation }) {
     }
   };
 
+  const filterContacts = () => {
+    if (search === "") {
+      return contacts;
+    }
+    return contacts.filter((contact) =>
+      `${contact.firstName} ${contact.lastName}`
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  };
+
 
   return loading ? (
     <Loader />
   ) : (
     <View style={styles.container}>
+      <SearchBar
+        placeholder="Search Contacts..."
+        onChangeText={setSearch}
+        value={search}
+      />
        <TouchableOpacity
   style={[
     {
@@ -118,7 +134,7 @@ export default function AddFromContact({ navigation }) {
 </TouchableOpacity>
 
       <FlatList
-        data={contacts}
+        data={filterContacts()}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -143,7 +159,7 @@ export default function AddFromContact({ navigation }) {
             />
             <Text
               style={styles.cardItemText}
-            >{`${item.firstName} ${item.lastName}`}</Text>
+            >{`${item.firstName} ${item.lastName? item.lastName : ""}`}</Text>
           </TouchableOpacity>
         )}
       />
@@ -173,7 +189,7 @@ const styles = StyleSheet.create({
     elevation: 2, // Add a shadow to the cards
   },
   cardItemText: {
-    fontSize: getFontSizeByWindowWidth(20), // Font size relative to screen width
+    fontSize: getFontSizeByWindowWidth(15), // Font size relative to screen width
     marginLeft: calcWidth(3), // Margin left relative to screen width
   },
   addButton: {
@@ -186,6 +202,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: getFontSizeByWindowWidth(20), // Font size relative to screen width
+    fontSize: getFontSizeByWindowWidth(15), // Font size relative to screen width
   }
 });
