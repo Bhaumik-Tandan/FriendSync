@@ -13,6 +13,7 @@ import Loader from "../components/Loader";
 import PAGES from "../constants/pages";
 import { calcHeight,calcWidth,getFontSizeByWindowWidth } from "../helper/res";
 
+
 export default function AddFromContact({ navigation }) {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [contacts, setContacts] = useState([]);
@@ -32,6 +33,12 @@ export default function AddFromContact({ navigation }) {
       }
     })();
   }, []);
+  const getBirthdayTimestamp = (birthday) => {
+    if (!birthday) return "";
+    const birthdayDate = new Date(birthday.year, birthday.month, birthday.day); // Note: Months are zero-based (0-11)
+
+    return birthdayDate;
+  };
 
   const toggleContactSelection = (contact) => {
     if (selectedContacts.includes(contact)) {
