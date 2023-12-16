@@ -4,7 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { calcWidth, calcHeight } from "../helper/res";
 import Modal from "react-native-modal";
 
-const Menu = ({  visible, hideMenu,options}) => {
+const Menu = ({  visible, hideMenu,options,icon}) => {
   
   return (
     <Modal
@@ -20,6 +20,7 @@ const Menu = ({  visible, hideMenu,options}) => {
       style={styles.modal}
     >
       <View style={styles.modalContent}>
+        {icon()}
         {
           options.map((item)=><TouchableOpacity style={styles.menuItem} onPress={item.onClick}>
           {item.icon}
@@ -43,8 +44,8 @@ const styles = {
     paddingHorizontal: calcHeight(1),
   },
   modalContent: {
-    backgroundColor: "white",
-    padding: 16,
+    backgroundColor: "#f3f2f6",
+    padding: calcHeight(2),
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { Alert, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Menu from "./Menu";
@@ -6,7 +6,6 @@ import { usePeople } from "../context/PeopleContext";
 import { useNavigation } from "@react-navigation/native";
 import PAGES from "../constants/pages";
 import { calcHeight, calcWidth, getFontSizeByWindowWidth } from "../helper/res";
-
 function Person({ name, description, birthday, id }) {
   // Parse the birthday date if it's not an empty string
   birthday = birthday !== "" ? new Date(birthday) : null;
@@ -65,6 +64,18 @@ function Person({ name, description, birthday, id }) {
     setShowMenu(false);
   };
 
+  const menuIcon = () => (
+    <View style={styles.iconContainer}>
+      <Ionicons
+        name="person"
+        size={calcHeight(3)}
+        color="white"
+      />
+    </View>
+  );
+  
+
+
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity onPress={() => setShowMenu(true)}>
@@ -92,6 +103,7 @@ function Person({ name, description, birthday, id }) {
         visible={showMenu}
         hideMenu={hideMenu}
         options={options}
+        icon={menuIcon}
       />
     </View>
   );
@@ -129,6 +141,15 @@ const styles = StyleSheet.create({
     fontSize: getFontSizeByWindowWidth(8),
     color: "gray",
   },
+  iconContainer: {
+    alignItems: "center", // Center items vertically
+    justifyContent: 'center', // Center items horizontally
+    padding: calcHeight(1),
+    width: calcWidth(12),
+    backgroundColor: "black",
+    borderRadius: calcHeight(4), // Optionally round the corners
+  },
+
 });
 
 export default Person;
