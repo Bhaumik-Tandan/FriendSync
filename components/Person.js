@@ -104,6 +104,7 @@ function Person({ name, description, birthday, id }) {
         hideMenu={hideMenu}
         options={options}
         icon={menuIcon}
+        menuTitle={name}
       />
     </View>
   );
