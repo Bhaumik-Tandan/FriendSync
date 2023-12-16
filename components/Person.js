@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Alert, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Menu from "./Menu";
 import { usePeople } from "../context/PeopleContext";
@@ -19,6 +19,45 @@ function Person({ name, description, birthday, id }) {
 
   // Access the navigation object to navigate to the edit page
   const navigation = useNavigation();
+
+  const hideMenu=()=>{
+    setShowMenu(false);
+  }
+
+  const deleteAlert = () => {
+    hideMenu();
+    Alert.alert(
+      "Delete Person",
+      `Are you sure you want to delete ${name}?`,
+      [
+        {
+          text: "Delete",
+          onPress: ()=>deletePerson({ id }),
+          style: "destructive",
+        },
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  const options=[
+    {
+      title:"Edit Person",
+      onClick:()=>handleEditPerson(),
+      icon:<Ionicons name="create-outline" size={calcWidth(8)} color="blue" />
+    },
+    {
+      title:"Delete Person",
+      onClick:deleteAlert,
+      icon:<Ionicons name="trash-outline" size={calcWidth(8)} color="red" />
+    }
+
+  ];
 
   // Function to handle editing the person
   const handleEditPerson = () => {
@@ -51,10 +90,8 @@ function Person({ name, description, birthday, id }) {
       </TouchableOpacity>
       <Menu
         visible={showMenu}
-        name={name}
-        hideMenu={() => setShowMenu(false)}
-        onDelete={() => deletePerson({ id })}
-        editCard={handleEditPerson}
+        hideMenu={hideMenu}
+        options={options}
       />
     </View>
   );
