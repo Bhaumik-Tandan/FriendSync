@@ -23,7 +23,7 @@ function RootNavigator() {
               ),
             }}
           />
-           <Tab.Screen
+          <Tab.Screen
             name={PAGES.SETTINGS_NAVIGATOR}
             component={SettingsNavigator}
             options={{
@@ -33,7 +33,7 @@ function RootNavigator() {
                 <Ionicons name="menu" size={size} color={color} />
               ),
             }}
-            />
+          />
         </Tab.Group>
       </Tab.Navigator>
     </NavigationContainer>

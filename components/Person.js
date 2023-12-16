@@ -1,5 +1,12 @@
-import React, { useState,useRef } from "react";
-import { Alert, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useRef } from "react";
+import {
+  Alert,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Menu from "./Menu";
 import { usePeople } from "../context/PeopleContext";
@@ -19,9 +26,9 @@ function Person({ name, description, birthday, id }) {
   // Access the navigation object to navigate to the edit page
   const navigation = useNavigation();
 
-  const hideMenu=()=>{
+  const hideMenu = () => {
     setShowMenu(false);
-  }
+  };
 
   const deleteAlert = () => {
     hideMenu();
@@ -31,7 +38,7 @@ function Person({ name, description, birthday, id }) {
       [
         {
           text: "Delete",
-          onPress: ()=>deletePerson({ id }),
+          onPress: () => deletePerson({ id }),
           style: "destructive",
         },
         {
@@ -44,18 +51,17 @@ function Person({ name, description, birthday, id }) {
     );
   };
 
-  const options=[
+  const options = [
     {
-      title:"Edit Person",
-      onClick:()=>handleEditPerson(),
-      icon:<Ionicons name="create-outline" size={calcWidth(8)} color="blue" />
+      title: "Edit Person",
+      onClick: () => handleEditPerson(),
+      icon: <Ionicons name="create-outline" size={calcWidth(8)} color="blue" />,
     },
     {
-      title:"Delete Person",
-      onClick:deleteAlert,
-      icon:<Ionicons name="trash-outline" size={calcWidth(8)} color="red" />
-    }
-
+      title: "Delete Person",
+      onClick: deleteAlert,
+      icon: <Ionicons name="trash-outline" size={calcWidth(8)} color="red" />,
+    },
   ];
 
   // Function to handle editing the person
@@ -66,15 +72,9 @@ function Person({ name, description, birthday, id }) {
 
   const menuIcon = () => (
     <View style={styles.iconContainer}>
-      <Ionicons
-        name="person"
-        size={calcHeight(3)}
-        color="white"
-      />
+      <Ionicons name="person" size={calcHeight(3)} color="white" />
     </View>
   );
-  
-
 
   return (
     <View style={styles.cardContainer}>
@@ -112,16 +112,16 @@ function Person({ name, description, birthday, id }) {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: calcWidth(2),
     elevation: 4, // for Android shadow
-    shadowColor: 'black', // for iOS shadow
+    shadowColor: "black", // for iOS shadow
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     width: calcWidth(41.5),
     marginHorizontal: calcWidth(3),
-    marginVertical: calcHeight(2)
+    marginVertical: calcHeight(2),
   },
   imageContainer: {
     alignItems: "center",
@@ -144,13 +144,12 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: "center", // Center items vertically
-    justifyContent: 'center', // Center items horizontally
+    justifyContent: "center", // Center items horizontally
     padding: calcHeight(1),
     width: calcWidth(12),
     backgroundColor: "black",
     borderRadius: calcHeight(4), // Optionally round the corners
   },
-
 });
 
 export default Person;

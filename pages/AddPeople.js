@@ -14,7 +14,7 @@ import { FAB } from "react-native-paper";
 import { usePeople } from "../context/PeopleContext";
 import { calcHeight, calcWidth } from "../helper/res";
 import { AntDesign } from "@expo/vector-icons";
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from "expo-file-system";
 import { Ionicons } from "@expo/vector-icons";
 import PAGES from "../constants/pages";
 
@@ -23,7 +23,7 @@ function AddPeople({ navigation, route }) {
     name: routeName,
     description: routeDescription,
     birthday: routeBirthday,
-    image:routeImage,
+    image: routeImage,
     id,
   } = route.params || {};
   const [name, setName] = useState("");
@@ -31,7 +31,7 @@ function AddPeople({ navigation, route }) {
   const [description, setDescription] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
   const { handleAddPeople, handleEditPerson } = usePeople();
-  const [image,setImage]=useState("");
+  const [image, setImage] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   React.useLayoutEffect(() => {
@@ -77,7 +77,10 @@ function AddPeople({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-       <TouchableOpacity style={styles.imageContainer} onPress={()=>setModalVisible(true)}>
+      <TouchableOpacity
+        style={styles.imageContainer}
+        onPress={() => setModalVisible(true)}
+      >
         <View style={styles.imageBox}>
           <Ionicons
             name="person"
@@ -85,8 +88,8 @@ function AddPeople({ navigation, route }) {
             color="black"
             style={styles.image}
           />
-          </View>
-        </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -199,31 +202,31 @@ const styles = StyleSheet.create({
     alignItems: "center", // This will center align items horizontally
     justifyContent: "center", // This will center align items vertically
     backgroundColor: "grey",
-    padding:calcHeight(2),
-    marginBottom:calcHeight(2)
+    padding: calcHeight(2),
+    marginBottom: calcHeight(2),
   },
   imageBox: {
     backgroundColor: "white",
     justifyContent: "center", // Center align children vertically
     alignItems: "center", // Center align children horizontally
-    borderRadius:calcWidth(30),
-    padding:calcHeight(2),
+    borderRadius: calcWidth(30),
+    padding: calcHeight(2),
     modalView: {
       flex: 1,
-      justifyContent: 'flex-end',
-      backgroundColor: 'rgba(0,0,0,0.5)', // Dimmed background
+      justifyContent: "flex-end",
+      backgroundColor: "rgba(0,0,0,0.5)", // Dimmed background
     },
     editProfilePicSection: {
-      backgroundColor: 'white',
+      backgroundColor: "white",
       padding: 20,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
     },
     closeButton: {
       padding: 10,
-      alignItems: 'center',
+      alignItems: "center",
     },
-  }
+  },
 });
 
 export default AddPeople;

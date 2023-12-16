@@ -11,8 +11,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { usePeople } from "../context/PeopleContext";
 import Loader from "../components/Loader";
 import PAGES from "../constants/pages";
-import { calcHeight,calcWidth,getFontSizeByWindowWidth } from "../helper/res";
-import { SearchBar } from "react-native-elements"; 
+import { calcHeight, calcWidth, getFontSizeByWindowWidth } from "../helper/res";
+import { SearchBar } from "react-native-elements";
 
 export default function AddFromContact({ navigation }) {
   const [selectedContacts, setSelectedContacts] = useState([]);
@@ -42,16 +42,16 @@ export default function AddFromContact({ navigation }) {
 
   const toggleContactSelection = (contact) => {
     if (selectedContacts.includes(contact)) {
-      setSelectedContacts((prev)=>{
-        if(isAllSelected)
-      setIsAllSelected(false);
-        return prev.filter((c) => c !== contact)});
+      setSelectedContacts((prev) => {
+        if (isAllSelected) setIsAllSelected(false);
+        return prev.filter((c) => c !== contact);
+      });
     } else {
-      setSelectedContacts((prev)=>{
-        setIsAllSelected(prev.length==contacts.length-1)
-        return [...prev, contact]});
+      setSelectedContacts((prev) => {
+        setIsAllSelected(prev.length == contacts.length - 1);
+        return [...prev, contact];
+      });
     }
-    
   };
 
   const handleAddPeople = async () => {
@@ -87,10 +87,9 @@ export default function AddFromContact({ navigation }) {
     return contacts.filter((contact) =>
       `${contact.firstName} ${contact.lastName}`
         .toLowerCase()
-        .includes(search.toLowerCase())
+        .includes(search.toLowerCase()),
     );
   };
-
 
   return loading ? (
     <Loader />
@@ -101,37 +100,38 @@ export default function AddFromContact({ navigation }) {
         onChangeText={setSearch}
         value={search}
       />
-       <TouchableOpacity
-  style={[
-    {
-      backgroundColor: isAllSelected ? "lightgreen" : "white",
-      padding: 10,
-      borderRadius: 5,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      elevation: 2,
-      marginBottom:30
-    },
-  ]}
-  activeOpacity={0.7}
-  underlayColor="#DDDDDD"
-  onPress={selectAllContacts}
-  accessibilityLabel={isAllSelected ? "Deselect all contacts" : "Select all contacts"}
->
-  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-   
-    <Text
-      style={[
-        styles.cardItemText,
-        { fontWeight: 'bold', marginLeft: 10 }
-      ]}
-    >
-      {isAllSelected ? "Deselect All" : "Select All"}
-    </Text>
-  </View>
-</TouchableOpacity>
+      <TouchableOpacity
+        style={[
+          {
+            backgroundColor: isAllSelected ? "lightgreen" : "white",
+            padding: 10,
+            borderRadius: 5,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
+            elevation: 2,
+            marginBottom: 30,
+          },
+        ]}
+        activeOpacity={0.7}
+        underlayColor="#DDDDDD"
+        onPress={selectAllContacts}
+        accessibilityLabel={
+          isAllSelected ? "Deselect all contacts" : "Select all contacts"
+        }
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text
+            style={[
+              styles.cardItemText,
+              { fontWeight: "bold", marginLeft: 10 },
+            ]}
+          >
+            {isAllSelected ? "Deselect All" : "Select All"}
+          </Text>
+        </View>
+      </TouchableOpacity>
 
       <FlatList
         data={filterContacts()}
@@ -157,9 +157,9 @@ export default function AddFromContact({ navigation }) {
               size={30}
               color={selectedContacts.includes(item) ? "green" : "lightgray"}
             />
-            <Text
-              style={styles.cardItemText}
-            >{`${item.firstName} ${item.lastName? item.lastName : ""}`}</Text>
+            <Text style={styles.cardItemText}>{`${item.firstName} ${
+              item.lastName ? item.lastName : ""
+            }`}</Text>
           </TouchableOpacity>
         )}
       />
@@ -203,5 +203,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: getFontSizeByWindowWidth(15), // Font size relative to screen width
-  }
+  },
 });
