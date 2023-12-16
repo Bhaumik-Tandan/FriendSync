@@ -7,14 +7,17 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
+  Image
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon from "react-native-vector-icons/Feather"; // Import icons from 'react-native-vector-icons'
 import { FAB } from "react-native-paper";
 import { usePeople } from "../context/PeopleContext";
-import { calcHeight, calcWidth } from "../helper/res";
-import { AntDesign } from "@expo/vector-icons";
-import * as FileSystem from "expo-file-system";
+import { calcHeight, calcWidth, getFontSizeByWindowWidth } from "../helper/res";
+import { AntDesign,FontAwesome } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons'; 
+import * as ImagePicker from 'expo-image-picker';
+import Menu from "../components/Menu";
 import { Ionicons } from "@expo/vector-icons";
 import PAGES from "../constants/pages";
 
@@ -34,6 +37,82 @@ function AddPeople({ navigation, route }) {
   const [image, setImage] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
+  const hideMenu=()=>{
+    setModalVisible(false);
+  }
+
+  async function handleTakePhoto() {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+  
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this app to access your camera!");
+      return;
+    }
+  
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing:true,
+      aspect: [4, 3], // Optional: you can specify the aspect ratio for the image editor
+      quality: 1,
+    });
+  
+      if(result.assets[0].uri)
+      setImage(result.assets[0].uri);
+  }
+
+  async function handlePickPhoto() {
+    // Request permission to access the photo library
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+    // Check if permission is granted
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this app to access your photo library!");
+      return;
+    }
+  
+    // Launch the image picker to select a photo
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true, // Allows the user to edit the photo
+      aspect: [4, 3], // Optional: you can specify the aspect ratio for the image editor
+      quality: 1, // Optional: quality of the selected image, 1 being the highest
+    });
+  
+  
+    // If an image is selected, set the image URI
+    if (result.assets[0].uri) {
+      setImage(result.assets[0].uri);
+    }
+  }
+  
+
+  const options = [
+    {
+        title: "Take Photo",
+        onClick: handleTakePhoto,
+        icon: <Feather name="camera" size={calcWidth(8)} color="black" />,
+    },
+    {
+        title: "Choose Photo",
+        onClick: handlePickPhoto,
+        icon: <FontAwesome name="photo" size={calcWidth(8)} color="black" />,
+    },
+    ...(
+        image
+            ? [{
+                  title: "Delete Photo",
+                  onClick: () => setImage(""),
+                  icon: (
+                      <FontAwesome
+                          name="photo"
+                          size={calcWidth(8)}
+                          color="black"
+                      />
+                  ),
+              }]
+            : []
+    ),
+];
+
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: id ? "Edit Person" : "Add Person",
@@ -45,6 +124,7 @@ function AddPeople({ navigation, route }) {
       name,
       birthday,
       description,
+      image
     };
     if (id) await handleEditPerson({ id, ...newPerson });
     else await handleAddPeople([newPerson]);
@@ -61,7 +141,9 @@ function AddPeople({ navigation, route }) {
     if (routeBirthday) {
       setBirthday(routeBirthday);
     }
-  }, [routeName, routeDescription, routeBirthday]);
+    if(routeImage)
+    setImage(routeImage);
+  }, [routeName, routeDescription, routeBirthday,routeImage]);
 
   const onDateChange = (event, selectedDate) => {
     if (selectedDate) {
@@ -78,17 +160,23 @@ function AddPeople({ navigation, route }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={styles.imageContainer}
+        style={[styles.imageContainer,{
+          backgroundColor: image?"transparent":"grey",
+        }]}
         onPress={() => setModalVisible(true)}
+        
       >
-        <View style={styles.imageBox}>
+       {image? <Image
+          source={{uri:image}}
+          style={{width: calcWidth(90), height: calcHeight(20)}}
+          />:<View style={styles.imageBox}>
           <Ionicons
             name="person"
             size={calcHeight(10)}
             color="black"
             style={styles.image}
           />
-        </View>
+        </View>}
       </TouchableOpacity>
       <TextInput
         style={styles.input}
@@ -150,6 +238,18 @@ function AddPeople({ navigation, route }) {
           onPress={() => navigation.navigate(PAGES.ADD_FROM_CONTACT)}
         />
       </View>
+      <Menu
+        visible={modalVisible}
+        hideMenu={hideMenu}
+        options={options}
+        icon={()=><Ionicons
+          name="person"
+          size={calcHeight(3)}
+          color="black"
+          style={styles.image}
+        />}
+        menuTitle={"Edit Picture"}
+      />
     </View>
   );
 }
@@ -157,31 +257,31 @@ function AddPeople({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: calcHeight(2),
     backgroundColor: "white", // Set a background color,
   },
   input: {
-    height: 40,
+    height: calcHeight(4),
     borderColor: "lightgray", // Use a lighter color for the border
-    borderWidth: 1,
-    borderRadius: 8, // Add rounded corners
-    marginBottom: 10,
-    padding: 8,
+    borderWidth: calcWidth(0.2),
+    borderRadius: calcWidth(1), // Add rounded corners
+    marginBottom: calcHeight(1),
+    padding: calcHeight(1),
   },
   birthdayContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: calcHeight(3),
   },
   label: {
-    marginRight: 10,
-    fontSize: 16,
+    marginRight: calcWidth(3),
+    fontSize: getFontSizeByWindowWidth(15),
   },
   calendarIcon: {
-    padding: 8,
+    padding: calcWidth(1),
   },
   dateText: {
-    fontSize: 16,
+    fontSize: getFontSizeByWindowWidth(12),
   },
   datePicker: {
     backgroundColor: "white",
@@ -189,9 +289,9 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#007AFF", // iOS blue color
     color: "white",
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 10,
+    padding: calcHeight(1),
+    borderRadius: calcHeight(1),
+    marginTop: calcHeight(1),
   },
   fabContainer: {
     position: "absolute",
@@ -201,9 +301,8 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: "center", // This will center align items horizontally
     justifyContent: "center", // This will center align items vertically
-    backgroundColor: "grey",
-    padding: calcHeight(2),
     marginBottom: calcHeight(2),
+    padding: calcHeight(2),
   },
   imageBox: {
     backgroundColor: "white",
@@ -215,17 +314,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: "flex-end",
       backgroundColor: "rgba(0,0,0,0.5)", // Dimmed background
-    },
-    editProfilePicSection: {
-      backgroundColor: "white",
-      padding: 20,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-    },
-    closeButton: {
-      padding: 10,
-      alignItems: "center",
-    },
+    }
   },
 });
 
