@@ -20,6 +20,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Menu from "../components/Menu";
 import { Ionicons } from "@expo/vector-icons";
 import PAGES from "../constants/pages";
+import * as FileSystem from "expo-file-system";
 
 function AddPeople({ navigation, route }) {
   const {
@@ -83,7 +84,6 @@ function AddPeople({ navigation, route }) {
     }
   }
   
-
   const options = [
     {
         title: "Take Photo",
@@ -101,10 +101,9 @@ function AddPeople({ navigation, route }) {
                   title: "Delete Photo",
                   onClick: () => setImage(""),
                   icon: (
-                      <FontAwesome
-                          name="photo"
+                    <AntDesign name="delete"
                           size={calcWidth(8)}
-                          color="black"
+                          color="red"
                       />
                   ),
               }]
@@ -142,7 +141,7 @@ function AddPeople({ navigation, route }) {
       setBirthday(routeBirthday);
     }
     if(routeImage)
-    setImage(routeImage);
+    setImage(FileSystem.documentDirectory+routeImage);
   }, [routeName, routeDescription, routeBirthday,routeImage]);
 
   const onDateChange = (event, selectedDate) => {

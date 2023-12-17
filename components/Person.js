@@ -68,7 +68,7 @@ function Person({ name, description, birthday,image, id }) {
 
   // Function to handle editing the person
   const handleEditPerson = () => {
-    navigation.navigate(PAGES.ADD_PEOPLE, { name, description, birthday, id });
+    navigation.navigate(PAGES.ADD_PEOPLE, { name, description, birthday, id,image });
     setShowMenu(false);
   };
 
