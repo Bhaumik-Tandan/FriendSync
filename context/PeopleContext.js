@@ -43,11 +43,12 @@ export const PeopleProvider = ({ children }) => {
 
   const handleEditPerson = async (person,imageURI=null) => {
     if(imageURI){
+    if(!imageURI.includes(person.id))
     saveImage(imageURI,person.id);
     person.image=person.id;
     }
     else{
-      deleteImage(person.image);
+      deleteImage(person.id);
       person.image=null;
     }
     const updatedPeople = people.map((p) => {
