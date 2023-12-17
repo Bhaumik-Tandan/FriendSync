@@ -55,21 +55,30 @@ export default function AddFromContact({ navigation }) {
   };
 
   const handleAddPeople = async () => {
+    const imageUrl=[];
     const newPeople = selectedContacts.map((contact) => {
-      const { name, jobTitle, company, birthday } = contact;
-
+      const { name, jobTitle, company, birthday, imageAvailable, image } = contact;
+  
+      // Log the image URL if available
+      if (imageAvailable && image?.uri) {
+        imageUrl.push(image.uri);
+      }
+      else
+      imageUrl.push(null);
+  
       const newPerson = {
         name: name || "",
         birthday: getBirthdayTimestamp(birthday),
         description: `${jobTitle || ""} ${company || ""}`.trim(),
       };
-
+  
       return newPerson;
     });
-
-    await addPeople(newPeople);
+  
+    await addPeople(newPeople,imageUrl);
     navigation.navigate(PAGES.PEOPLE_LIST);
   };
+  
   const selectAllContacts = () => {
     if (isAllSelected) {
       setSelectedContacts([]);
