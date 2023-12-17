@@ -86,30 +86,40 @@ function AddPeople({ navigation, route }) {
 
   const options = [
     {
-        title: "Take Photo",
-        onClick: handleTakePhoto,
-        icon: <Feather name="camera" size={calcWidth(8)} color="black" />,
+      title: "Take Photo",
+      onClick: async () => {
+        await handleTakePhoto();
+        hideMenu(); // Hide the modal after taking the photo
+      },
+      icon: <Feather name="camera" size={calcWidth(8)} color="black" />,
     },
     {
-        title: "Choose Photo",
-        onClick: handlePickPhoto,
-        icon: <FontAwesome name="photo" size={calcWidth(8)} color="black" />,
+      title: "Choose Photo",
+      onClick: async () => {
+        await handlePickPhoto();
+        hideMenu(); // Hide the modal after picking the photo
+      },
+      icon: <FontAwesome name="photo" size={calcWidth(8)} color="black" />,
     },
     ...(
-        image
-            ? [{
-                  title: "Delete Photo",
-                  onClick: () => setImage(""),
-                  icon: (
-                    <AntDesign name="delete"
-                          size={calcWidth(8)}
-                          color="red"
-                      />
-                  ),
-              }]
-            : []
+      image
+        ? [{
+            title: "Delete Photo",
+            onClick: () => {
+              setImage("");
+              hideMenu(); // Hide the modal after deleting the photo
+            },
+            icon: (
+              <AntDesign name="delete"
+                    size={calcWidth(8)}
+                    color="red"
+                />
+            ),
+          }]
+        : []
     ),
-];
+  ];
+  
 
 
   React.useLayoutEffect(() => {

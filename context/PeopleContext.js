@@ -44,7 +44,7 @@ export const PeopleProvider = ({ children }) => {
   const handleEditPerson = async (person,imageURI=null) => {
     if(imageURI){
     if(!imageURI.includes(person.id))
-    saveImage(imageURI,person.id);
+    await saveImage(imageURI,person.id);
     person.image=person.id;
     }
     else{
