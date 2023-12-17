@@ -123,11 +123,11 @@ function AddPeople({ navigation, route }) {
     const newPerson = {
       name,
       birthday,
-      description,
-      image
+      description
     };
-    if (id) await handleEditPerson({ id, ...newPerson });
-    else await handleAddPeople([newPerson]);
+
+    if (id) await handleEditPerson({ id, ...newPerson },image);
+    else await handleAddPeople([newPerson],image);
     navigation.navigate(PAGES.PEOPLE_LIST);
   };
 
@@ -166,17 +166,22 @@ function AddPeople({ navigation, route }) {
         onPress={() => setModalVisible(true)}
         
       >
-       {image? <Image
+       {image? 
+       <Image
           source={{uri:image}}
           style={{width: calcWidth(90), height: calcHeight(20)}}
-          />:<View style={styles.imageBox}>
+          />
+
+          :<View style={styles.imageBox}>
           <Ionicons
             name="person"
             size={calcHeight(10)}
             color="black"
             style={styles.image}
           />
-        </View>}
+        </View>
+        }
+        
       </TouchableOpacity>
       <TextInput
         style={styles.input}

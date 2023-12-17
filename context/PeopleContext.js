@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getLocalStoreData, setLocalStoreData } from "../helper/localStorage";
 import getUUID from "../helper/getUUID";
-
+import saveImage from "../helper/saveImage";
+import deleteImage from "../helper/deleteImage";
 const PeopleContext = createContext();
 
 export const PeopleProvider = ({ children }) => {
@@ -29,9 +30,10 @@ export const PeopleProvider = ({ children }) => {
     const updatedPeople = people.filter((p) => p.id !== person.id);
     setPeople(updatedPeople);
     await setLocalStoreData("people", updatedPeople);
+    deleteImage(person.id);
   };
 
-  const handleEditPerson = async (person) => {
+  const handleEditPerson = async (person,imageURI=null) => {
     const updatedPeople = people.map((p) => {
       if (p.id === person.id) {
         return person;
@@ -40,6 +42,8 @@ export const PeopleProvider = ({ children }) => {
     });
     setPeople(updatedPeople);
     await setLocalStoreData("people", updatedPeople);
+    if(imageURI)
+    saveImage(imageURI,person.id);
   };
 
   return (
