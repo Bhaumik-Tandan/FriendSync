@@ -97,7 +97,7 @@ function Person({ name, description, birthday,image, id }) {
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.description}>{description}</Text>
+          <Text style={styles.description}>{description.slice(0, 50).replace(/\n/g, ' ')}</Text>
           {birthday && (
             <Text style={styles.birthday}>
               {`${birthday.getDate()} ${birthday.toLocaleString("default", {
