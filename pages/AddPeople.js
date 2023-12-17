@@ -83,7 +83,7 @@ function AddPeople({ navigation, route }) {
       setImage(result.assets[0].uri);
     }
   }
-  
+
   const options = [
     {
         title: "Take Photo",
@@ -126,7 +126,7 @@ function AddPeople({ navigation, route }) {
     };
 
     if (id) await handleEditPerson({ id, ...newPerson },image);
-    else await handleAddPeople([newPerson],image);
+    else await handleAddPeople([newPerson],[image]);
     navigation.navigate(PAGES.PEOPLE_LIST);
   };
 

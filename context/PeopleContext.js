@@ -17,10 +17,18 @@ export const PeopleProvider = ({ children }) => {
     getPeople();
   }, []);
 
-  const handleAddPeople = async (newPeople) => {
-    newPeople.map((person) => {
-      person.id = getUUID();
-    });
+  const handleAddPeople = async (newPeople,images=[]) => {
+    for(let i=0;i<newPeople.length;i++)
+    {
+      const id=getUUID();
+      const image=images.at(i);
+      newPeople[i].id=id;
+      if(image){
+        saveImage(image,id);
+        newPeople[i].image=id;
+        }
+    }
+
     const updatedPeople = people ? [...people, ...newPeople] : newPeople;
     setPeople(updatedPeople);
     await setLocalStoreData("people", updatedPeople);
@@ -39,7 +47,7 @@ export const PeopleProvider = ({ children }) => {
     person.image=person.id;
     }
     else{
-      deleteImage(person.id);
+      deleteImage(person.image);
       person.image=null;
     }
     const updatedPeople = people.map((p) => {
