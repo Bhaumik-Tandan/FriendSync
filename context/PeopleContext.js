@@ -34,6 +34,9 @@ export const PeopleProvider = ({ children }) => {
   };
 
   const handleEditPerson = async (person,imageURI=null) => {
+    if(imageURI)
+    saveImage(imageURI,person.id);
+    person.image=person.id;
     const updatedPeople = people.map((p) => {
       if (p.id === person.id) {
         return person;
@@ -42,8 +45,6 @@ export const PeopleProvider = ({ children }) => {
     });
     setPeople(updatedPeople);
     await setLocalStoreData("people", updatedPeople);
-    if(imageURI)
-    saveImage(imageURI,person.id);
   };
 
   return (

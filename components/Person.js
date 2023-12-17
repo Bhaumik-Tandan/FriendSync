@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   Alert,
   View,
@@ -13,7 +13,9 @@ import { usePeople } from "../context/PeopleContext";
 import { useNavigation } from "@react-navigation/native";
 import PAGES from "../constants/pages";
 import { calcHeight, calcWidth, getFontSizeByWindowWidth } from "../helper/res";
-function Person({ name, description, birthday, id }) {
+import * as FileSystem from "expo-file-system";
+import fileExists from "../helper/fileExists";
+function Person({ name, description, birthday,image, id }) {
   // Parse the birthday date if it's not an empty string
   birthday = birthday !== "" ? new Date(birthday) : null;
 
@@ -80,12 +82,18 @@ function Person({ name, description, birthday, id }) {
     <View style={styles.cardContainer}>
       <TouchableOpacity onPress={() => setShowMenu(true)}>
         <View style={styles.imageContainer}>
-          <Ionicons
+         { image ?
+         <Image
+         source={{uri:FileSystem.documentDirectory + image}}
+         width={calcWidth(20)}
+         height={calcWidth(20)}
+         style={styles.profileImage}
+         />:
+         <Ionicons
             name="person"
             size={calcHeight(10)}
             color="black"
-            style={styles.image}
-          />
+          />}
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.name}>{name}</Text>
@@ -150,6 +158,10 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     borderRadius: calcHeight(4), // Optionally round the corners
   },
+  profileImage:{
+    borderRadius:calcWidth(10),
+    marginTop:calcHeight(1)
+  }
 });
 
 export default Person;
