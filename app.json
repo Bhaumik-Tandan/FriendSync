@@ -2,7 +2,7 @@
   "expo": {
     "name": "FriendSync",
     "slug": "friendsync",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.friendSync.friendSync",
-      "buildNumber": "5"
+      "buildNumber": "6"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +27,7 @@
         "android.permission.WRITE_CONTACTS"
       ],
       "package": "com.friendSync.friendSync",
-      "versionCode": 5
+      "versionCode": 6
     },
     "web": {
       "favicon": "./assets/favicon.png"
