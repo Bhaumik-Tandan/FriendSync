@@ -43,7 +43,14 @@
         {
           "contactsPermission": "We need access to your contacts to make it easier for you to invite friends to events and share contact information with others. Your contacts will not be shared with any third parties and will only be used for in-app function of  looking up friends' information."
         }
-      ]
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "To select your contact's profile picture, we require access to your gallery.",
+          "cameraPermission": "To capture a new profile picture for your contact, we need access to your camera."
+        }
+      ]      
     ],
     "owner": "friendsync"
   },
