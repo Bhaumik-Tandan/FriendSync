@@ -14,8 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 import PAGES from "../constants/pages";
 import { calcHeight, calcWidth, getFontSizeByWindowWidth } from "../helper/res";
 import * as FileSystem from "expo-file-system";
-import fileExists from "../helper/fileExists";
-function Person({ name, description, birthday,image, id }) {
+
+function Person({ name, description, birthday,image, id,updateId }) {
   // Parse the birthday date if it's not an empty string
   birthday = birthday !== "" ? new Date(birthday) : null;
 
@@ -88,6 +88,7 @@ function Person({ name, description, birthday,image, id }) {
          width={calcWidth(20)}
          height={calcWidth(20)}
          style={styles.profileImage}
+         key={updateId}
          />:
          <Ionicons
             name="person"

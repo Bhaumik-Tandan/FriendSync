@@ -43,8 +43,10 @@ export const PeopleProvider = ({ children }) => {
 
   const handleEditPerson = async (person,imageURI=null) => {
     if(imageURI){
-    if(!imageURI.includes(person.id))
+    if(!imageURI.includes(person.id)){
+    
     await saveImage(imageURI,person.id);
+  }
     person.image=person.id;
     }
     else{
@@ -53,7 +55,7 @@ export const PeopleProvider = ({ children }) => {
     }
     const updatedPeople = people.map((p) => {
       if (p.id === person.id) {
-        return person;
+        return {updateId:getUUID(),...person};
       }
       return p;
     });
