@@ -46,6 +46,7 @@ export const PeopleProvider = ({ children }) => {
     if(!imageURI.includes(person.id)){
     
     await saveImage(imageURI,person.id);
+    person.updateId=getUUID();
   }
     person.image=person.id;
     }
@@ -55,7 +56,7 @@ export const PeopleProvider = ({ children }) => {
     }
     const updatedPeople = people.map((p) => {
       if (p.id === person.id) {
-        return {updateId:getUUID(),...person};
+        return person;
       }
       return p;
     });
