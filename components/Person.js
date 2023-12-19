@@ -1,12 +1,5 @@
-import React, { useState } from "react";
-import {
-  Alert,
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import React,{useState} from "react";
+import { Alert, View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Menu from "./Menu";
 import { usePeople } from "../context/PeopleContext";
@@ -15,18 +8,11 @@ import PAGES from "../constants/pages";
 import { calcHeight, calcWidth, getFontSizeByWindowWidth } from "../helper/res";
 import * as FileSystem from "expo-file-system";
 
-function Person({ name, description, birthday,image, id,updateId }) {
-  // Parse the birthday date if it's not an empty string
+function Person({ name, description, birthday, image, id, updateId, selectedIds, setSelectedIds, deletionMode }) {
   birthday = birthday !== "" ? new Date(birthday) : null;
-
-  // Access the deletePerson function from the PeopleContext
   const { deletePerson } = usePeople();
-
-  // State to control the visibility of the card menu
-  const [showMenu, setShowMenu] = useState(false);
-
-  // Access the navigation object to navigate to the edit page
   const navigation = useNavigation();
+  const [showMenu,setShowMenu]=useState(false);
 
   const hideMenu = () => {
     setShowMenu(false);
@@ -49,7 +35,7 @@ function Person({ name, description, birthday,image, id,updateId }) {
           style: "cancel",
         },
       ],
-      { cancelable: true },
+      { cancelable: true }
     );
   };
 
@@ -66,10 +52,8 @@ function Person({ name, description, birthday,image, id,updateId }) {
     },
   ];
 
-  // Function to handle editing the person
   const handleEditPerson = () => {
-    navigation.navigate(PAGES.ADD_PEOPLE, { name, description, birthday, id,image });
-    setShowMenu(false);
+    navigation.navigate(PAGES.ADD_PEOPLE, { name, description, birthday, id, image });
   };
 
   const menuIcon = () => (
@@ -79,26 +63,36 @@ function Person({ name, description, birthday,image, id,updateId }) {
   );
 
   return (
-    <View style={styles.cardContainer}>
-      <TouchableOpacity onPress={() => setShowMenu(true)}>
+    <View style={[styles.cardContainer, selectedIds.includes(id) ? styles.selectedCard : {}]}>
+      <TouchableOpacity
+        onPress={() => {
+          if (deletionMode) {
+            if (selectedIds.includes(id)) {
+              setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id));
+            } else {
+              setSelectedIds([...selectedIds, id]);
+            }
+          } else {
+            setShowMenu(true);
+          }
+        }}
+      >
         <View style={styles.imageContainer}>
-         { image ?
-         <Image
-         source={{uri:FileSystem.documentDirectory + image}}
-         width={calcWidth(20)}
-         height={calcWidth(20)}
-         style={styles.profileImage}
-         key={updateId}
-         />:
-         <Ionicons
-            name="person"
-            size={calcHeight(10)}
-            color="black"
-          />}
+          {image ? (
+            <Image
+              source={{ uri: FileSystem.documentDirectory + image }}
+              width={calcWidth(20)}
+              height={calcWidth(20)}
+              style={styles.profileImage}
+              key={updateId}
+            />
+          ) : (
+            <Ionicons name="person" size={calcHeight(10)} color="black" />
+          )}
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.description}>{description.slice(0, 50).replace(/\n/g, ' ')}</Text>
+          <Text style={styles.description}>{description.slice(0, 50).replace(/\n/g, " ")}</Text>
           {birthday && (
             <Text style={styles.birthday}>
               {`${birthday.getDate()} ${birthday.toLocaleString("default", {
@@ -108,13 +102,7 @@ function Person({ name, description, birthday,image, id,updateId }) {
           )}
         </View>
       </TouchableOpacity>
-      <Menu
-        visible={showMenu}
-        hideMenu={hideMenu}
-        options={options}
-        icon={menuIcon}
-        menuTitle={name}
-      />
+      <Menu visible={showMenu} hideMenu={hideMenu} options={options} icon={menuIcon} menuTitle={name} />
     </View>
   );
 }
@@ -123,8 +111,8 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: "white",
     borderRadius: calcWidth(2),
-    elevation: 4, // for Android shadow
-    shadowColor: "black", // for iOS shadow
+    elevation: 4,
+    shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -152,17 +140,21 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   iconContainer: {
-    alignItems: "center", // Center items vertically
-    justifyContent: "center", // Center items horizontally
+    alignItems: "center",
+    justifyContent: "center",
     padding: calcHeight(1),
     width: calcWidth(12),
     backgroundColor: "black",
-    borderRadius: calcHeight(4), // Optionally round the corners
+    borderRadius: calcHeight(4),
   },
-  profileImage:{
-    borderRadius:calcWidth(10),
-    marginTop:calcHeight(1)
-  }
+  profileImage: {
+    borderRadius: calcWidth(10),
+    marginTop: calcHeight(1),
+  },
+  selectedCard: {
+    borderColor: "#017bff",
+    borderWidth: calcWidth(0.25),
+  },
 });
 
 export default Person;
