@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     width: calcWidth(41.5),
     marginHorizontal: calcWidth(3),
-    marginVertical: calcHeight(2),
+    marginVertical: calcHeight(2)
   },
   imageContainer: {
     alignItems: "center",

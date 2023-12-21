@@ -1,28 +1,104 @@
-import React, { useState, useLayoutEffect } from "react";
-import { View, StyleSheet, FlatList, TouchableOpacity, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { FAB } from "react-native-paper";
-import { usePeople } from "../context/PeopleContext";
-import { calcHeight, calcWidth } from "../helper/res";
-import Person from "../components/Person";
-import PAGES from "../constants/pages";
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity, Text, Pressable, Alert } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { FAB } from 'react-native-paper';
+import { usePeople } from '../context/PeopleContext';
+import { calcHeight, calcWidth, getFontSizeByWindowWidth } from '../helper/res';
+import Person from '../components/Person';
+import PAGES from '../constants/pages';
+import { useIsFocused } from '@react-navigation/native';
 
 function PeopleList({ navigation }) {
-  const { people } = usePeople();
+  const { people, multiDelete } = usePeople();
   const [deletionMode, setDeletionMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState([]);
+  const isFocused = useIsFocused();
+
+  const updateTabBarVisibility = () => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: deletionMode ? { display: "none" } : {},
+    });
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      updateTabBarVisibility();
+    }
+  }, [isFocused, deletionMode]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => setDeletionMode(!deletionMode)}>
-          <Text style={{ color: "#017bff" }}>
-            {deletionMode ? "Cancel" : "Edit"}
-          </Text>
+        <TouchableOpacity 
+          onPress={() => {
+            setDeletionMode((prev) => !prev);
+            setSelectedIds([]);
+          }}
+        >
+          {deletionMode ?
+            <Text style={[styles.bottomBarText, { fontWeight: "bold" }]}>
+              Cancel
+            </Text> :
+            <Text style={[styles.bottomBarText,{paddingLeft:calcWidth(7)}]}>
+              Edit
+            </Text>
+          }
         </TouchableOpacity>
       ),
     });
   }, [navigation, deletionMode]);
+  
+  
+
+  const handleDeletePress = async () => {
+    Alert.alert(
+      "Delete Person",
+      `Are you sure you want to delete the selected people?`,
+      [
+        {
+          text: "Delete",
+          onPress: () => {
+            multiDelete(selectedIds);
+            setSelectedIds([]);
+            setDeletionMode(false);
+          },
+          style: "destructive",
+        },
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const renderBottomBar = () => {
+    if (deletionMode) {
+      return (
+        <View style={styles.bottomBar}>
+          <Pressable style={styles.bottomBarButton} onPress={handleDeletePress}>
+            <Text style={styles.bottomBarText}>Delete</Text>
+          </Pressable>
+          <Pressable style={styles.bottomBarButton} onPress={()=>{
+            setDeletionMode((prev) => !prev)
+            setSelectedIds([]);
+          }}>
+            <Text style={styles.bottomBarText}>Cancel</Text>
+          </Pressable>
+        </View>
+      );
+    }
+    return (
+      <View style={styles.fabContainer}>
+        <FAB
+          icon="plus"
+          onPress={() => navigation.navigate(PAGES.ADD_PEOPLE)}
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -49,12 +125,7 @@ function PeopleList({ navigation }) {
           <Text>Add People</Text>
         </TouchableOpacity>
       )}
-      <View style={styles.fabContainer}>
-        <FAB
-          icon="plus"
-          onPress={() => navigation.navigate(PAGES.ADD_PEOPLE)}
-        />
-      </View>
+      {renderBottomBar()}
     </View>
   );
 }
@@ -72,13 +143,32 @@ const styles = StyleSheet.create({
     right: calcWidth(5),
   },
   addPeopleButton: {
-    padding: 16,
-    borderRadius: 8,
+    padding: calcWidth(1),
+    borderRadius: calcWidth(1),
     elevation: 2,
-    marginBottom: 8,
+    marginBottom: calcHeight(5),
     alignItems: "center",
     justifyContent: "center",
   },
+  bottomBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#ffffff',
+    elevation: 2,
+    paddingHorizontal: calcWidth(3),
+    marginBottom: calcHeight(5),
+    paddingTop: calcHeight(2),
+  },
+  bottomBarButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomBarText: {
+    color: '#017bff',
+    fontSize: getFontSizeByWindowWidth(15)
+  },
+  
 });
 
 export default PeopleList;

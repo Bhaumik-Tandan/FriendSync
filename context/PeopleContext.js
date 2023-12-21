@@ -41,6 +41,30 @@ export const PeopleProvider = ({ children }) => {
     deleteImage(person.id);
   };
 
+  
+    const multiDelete = async (peopleToDeleteIds) => {
+      // Retrieve the corresponding person objects for the IDs to be deleted
+      const peopleToDelete = people.filter((person) => peopleToDeleteIds.includes(person.id));
+    
+      // Update the state and local storage with the filtered list (excluding the deleted people)
+      const updatedPeople = people.filter((person) => !peopleToDeleteIds.includes(person.id));
+      setPeople(updatedPeople);
+      await setLocalStoreData("people", updatedPeople);
+    
+      // Delete images for the selected people (if needed)
+      for (const person of peopleToDelete) {
+        try {
+          await deleteImage(person.id);
+        } catch (error) {
+          // Handle any errors that occur during image deletion (e.g., image not found)
+          // console.error(`Error deleting image for person with ID ${person.id}: ${error.message}`);
+        }
+      }
+    };
+    
+    
+  
+
   const handleEditPerson = async (person,imageURI=null) => {
     if(imageURI){
     if(!imageURI.includes(person.id)){
@@ -74,6 +98,7 @@ export const PeopleProvider = ({ children }) => {
         handleEditPerson,
         loading,
         setLoading,
+        multiDelete
       }}
     >
       {children}
